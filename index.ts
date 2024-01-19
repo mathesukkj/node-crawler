@@ -16,7 +16,7 @@ async function main() {
   console.log(`starting crawl of ${baseUrl}`)
   const pages = await crawlPage(baseUrl, baseUrl, {})
 
-  for (const page in pages) {
+  for (const page of Object.entries(pages)) {
     console.log(page)
   }
 }
