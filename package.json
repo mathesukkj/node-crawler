@@ -14,5 +14,8 @@
   "scripts": {
     "start": "bun index.ts",
     "test": "bun jest"
+  },
+  "dependencies": {
+    "tsdom": "^0.6.9"
   }
 }
