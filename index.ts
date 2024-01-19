@@ -1,10 +1,20 @@
+import { crawlPage } from './crawl'
+
 function main() {
   if (process.argv.length < 3) {
     console.error('no website provided')
-    process.exit()
+    process.exit(1)
   }
 
-  console.log('starting')
+  if (process.argv.length > 3) {
+    console.error('too many cli args')
+    process.exit(1)
+  }
+
+  const baseUrl = process.argv[2]
+
+  console.log(`starting crawl of ${baseUrl}`)
+  crawlPage(baseUrl)
 }
 
 main()

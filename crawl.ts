@@ -25,3 +25,23 @@ export function getURLsFromHTML(htmlBody: string, baseURL: string) {
 
   return hrefs
 }
+
+export async function crawlPage(url: string) {
+  try {
+    const res = await fetch(url).then((res) => res)
+
+    if (res.status >= 400) {
+      throw new Error('Status code: ' + res.status)
+    }
+
+    if (!res.headers.get('content-type')?.includes('text/html')) {
+      throw new Error(
+        `non-html response. got ${res.headers.get('content-type')} instead of html`,
+      )
+    }
+
+    console.log(await res.text())
+  } catch (err) {
+    console.error('error during fetching! ' + err)
+  }
+}
