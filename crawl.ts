@@ -26,9 +26,29 @@ export function getURLsFromHTML(htmlBody: string, baseURL: string) {
   return hrefs
 }
 
-export async function crawlPage(url: string) {
+export async function crawlPage(
+  baseUrl: string,
+  currentUrl: string,
+  pages: Record<string, number>,
+) {
+  const baseURLObj = new URL(baseUrl)
+  const currentURLObj = new URL(currentUrl)
+  if (baseURLObj.hostname != currentURLObj.hostname) {
+    return pages
+  }
+
+  const normalizedCurrentURL = normalizeURL(currentUrl)
+  if (pages[normalizedCurrentURL] > 0) {
+    pages[normalizedCurrentURL]++
+    return pages
+  }
+
+  pages[normalizedCurrentURL] = 1
+
+  console.log('crawling ' + currentUrl)
+
   try {
-    const res = await fetch(url).then((res) => res)
+    const res = await fetch(currentUrl).then((res) => res)
 
     if (res.status >= 400) {
       throw new Error('Status code: ' + res.status)
@@ -40,8 +60,15 @@ export async function crawlPage(url: string) {
       )
     }
 
-    console.log(await res.text())
+    const htmlBody = await res.text()
+    const nextURLs = getURLsFromHTML(htmlBody, baseUrl)
+
+    for (const url of nextURLs) {
+      if (url) pages = await crawlPage(baseUrl, url, pages)
+    }
   } catch (err) {
     console.error('error during fetching! ' + err)
   }
+
+  return pages
 }
