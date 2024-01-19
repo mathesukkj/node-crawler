@@ -20,7 +20,7 @@ export function printReport(pages: Record<string, number>) {
   }
 
   console.log(
-    `Found a total of \u001b[32m${sortedPages.length}\u001b[37mpages!`,
+    `Found a total of \u001b[32m${sortedPages.length}\u001b[37m pages!`,
   )
   console.log('===========')
   console.log('END REPORT')
