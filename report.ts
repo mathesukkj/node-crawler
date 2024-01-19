@@ -19,6 +19,9 @@ export function printReport(pages: Record<string, number>) {
     )
   }
 
+  console.log(
+    `Found a total of \u001b[32m${sortedPages.length}\u001b[37mpages!`,
+  )
   console.log('===========')
   console.log('END REPORT')
   console.log('===========')
