@@ -1,5 +1,5 @@
 import { crawlPage } from './crawl'
-import { sortPages } from './report'
+import { printReport, sortPages } from './report'
 
 async function main() {
   if (process.argv.length < 3) {
@@ -16,8 +16,7 @@ async function main() {
 
   console.log(`starting crawl of ${baseUrl}`)
   const pages = await crawlPage(baseUrl, baseUrl, {})
-  const sortedPages = sortPages(pages)
-  console.log(sortedPages)
+  printReport(pages)
 }
 
 main()
